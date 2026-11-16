@@ -1,5 +1,5 @@
 import type { Request } from 'express'
-import type { NewspostSchema } from '../interfaces/interfaces.js'
+import type { NewspostSchema, RedisUserSchema } from '../interfaces/interfaces.js'
 
 type NewspostByIdRequest = Request<{ id: string }>
 
@@ -33,6 +33,10 @@ type AuthenBody = {
   password: string
 }
 
+type CreateRedisUserBody = Omit<RedisUserSchema, 'id' | 'createDate'>
+type CreateRedisUserRequest = Request<object, object, CreateRedisUserBody>
+type RedisUserByIdRequest = Request<{ id: string }>
+
 export type {
   NewspostByIdRequest,
   CreateNewspostBody,
@@ -44,4 +48,7 @@ export type {
   GetNewspostsRequest,
   RegisterBody,
   AuthenBody,
+  CreateRedisUserBody,
+  CreateRedisUserRequest,
+  RedisUserByIdRequest,
 }

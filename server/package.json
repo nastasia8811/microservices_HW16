@@ -16,7 +16,9 @@
     "migration:run": "tsx --env-file=.env ../node_modules/typeorm/cli.js migration:run -d src/db/data-source.ts",
     "migration:revert": "tsx --env-file=.env ../node_modules/typeorm/cli.js migration:revert -d src/db/data-source.ts",
     "seed": "tsx --env-file=.env src/db/seed.ts",
-    "build": "tsc --noEmit false --outDir dist --rewriteRelativeImportExtensions"
+    "build": "tsc --noEmit false --outDir dist --rewriteRelativeImportExtensions",
+    "start:users": "nodemon users-service.ts",
+    "start:logger": "nodemon logging-service.ts"
   },
   "nodemonConfig": {
     "ext": "ts,json",
@@ -47,6 +49,7 @@
     "passport": "^0.7.0",
     "passport-jwt": "^4.0.1",
     "pg": "^8.23.1",
+    "redis": "^6.3.1",
     "reflect-metadata": "^0.2.2",
     "typeorm": "^1.1.3",
     "uuid": "^14.0.3",

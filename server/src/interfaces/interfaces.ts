@@ -1,6 +1,3 @@
-// Repository Pattern - Доступ до даних інкапсульований у стандартному наборі операцій.
-// Логіка зберігання відокремлена від решти коду, тому спосіб зберігання в майбутньому можна змінити без змін в інших модулях.
-
 interface NewspostSchema {
   id: number
   title: string
@@ -17,4 +14,11 @@ interface UserSchema {
   createDate: Date
 }
 
-export type { NewspostSchema, UserSchema }
+interface RedisUserSchema {
+  id: number
+  name: string
+  email: string
+  createDate: string
+}
+
+export type { NewspostSchema, UserSchema, RedisUserSchema }

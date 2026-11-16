@@ -1,5 +1,6 @@
 import Ajv from 'ajv'
 import addFormats from 'ajv-formats'
+import type { CreateRedisUserBody } from '../types/types.js'
 
 const ajv = new Ajv.default()
 addFormats.default(ajv)
@@ -48,4 +49,21 @@ const validateAuthentification = {
   additionalProperties: false,
 }
 
-export { ajv, validateCreate, validateUpdate, validateRegistration, validateAuthentification }
+const validateRedisUser = ajv.compile<CreateRedisUserBody>({
+  type: 'object',
+  properties: {
+    name: { type: 'string', minLength: 1, maxLength: 50 },
+    email: { type: 'string', format: 'email' },
+  },
+  required: ['name', 'email'],
+  additionalProperties: false,
+})
+
+export {
+  ajv,
+  validateCreate,
+  validateUpdate,
+  validateRegistration,
+  validateAuthentification,
+  validateRedisUser,
+}
