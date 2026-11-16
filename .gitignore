@@ -1,0 +1,10 @@
+node_modules
+.idea/
+dist/
+logs/
+
+.env*
+!.env.example
+*.log
+
+
