@@ -95,3 +95,5 @@ curl localhost:3001/users/1
 - **Зберігання:** юзер лежить у Redis під ключем `user:<id>` як JSON-рядок. Id видає `INCR users:lastId`. Команда атомарна, тому два одночасні запити не отримають однаковий id.
 - **Pub/Sub:** UserService виконує `PUBLISH`, LoggingService виконує `SUBSCRIBE`. Клієнт у режимі підписки не може виконувати інші команди, тому LoggingService підписується через окреме підключення `redis.duplicate()`.
 - **Помилки:** валідація через ajv, власні класи помилок (`ValidationError` → 400, `NotFoundError` → 404) і один глобальний `errorMiddleware`, без try/catch у роутах (Express 5 сам передає помилки з async-обробників).
+
+Документація API: http://localhost:8000/api-docs

@@ -8,6 +8,8 @@ import passport from 'passport'
 import authRoutes from './src/routes/auth.router.js'
 import { AppDataSource } from './src/db/data-source.js'
 import { logger } from './src/logger.js'
+import swaggerAutogen from 'swagger-autogen'
+import swaggerUi from 'swagger-ui-express'
 
 const app: Express = express()
 const clientDistPath = path.join(import.meta.dirname, '../client/dist')
@@ -33,6 +35,14 @@ app.use(authRoutes)
 app.get('/health', (_req: Request, res: Response) => res.json({ ok: true }))
 
 app.use('/api/newsposts', newspostsRouter)
+
+const swagger = await swaggerAutogen()('./swagger.json', ['./server.ts'], {
+  info: { title: 'News API', description: 'API новинного сервісу' },
+  host: `${config.host}:${config.port}`,
+})
+if (swagger) {
+  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swagger.data))
+}
 
 app.get('/', (_req: Request, res: Response) => {
   res.sendFile(path.join(clientDistPath, 'index.html'))

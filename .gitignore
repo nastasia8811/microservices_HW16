@@ -6,5 +6,5 @@ logs/
 .env*
 !.env.example
 *.log
-
+swagger.json
 
