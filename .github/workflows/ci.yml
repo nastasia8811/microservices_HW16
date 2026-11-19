@@ -37,5 +37,11 @@ jobs:
       - name: Lint (eslint)
         run: npm run lint
 
+      - name: Typecheck (with tests)
+        run: npm run typecheck
+
+      - name: Test (jest)
+        run: npm test
+
       - name: Build (TypeScript -> JavaScript)
         run: npm run build

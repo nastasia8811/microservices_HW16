@@ -14,7 +14,9 @@
     "lint": "eslint . && npm run lint --prefix client",
     "format": "prettier --write .",
     "start:users": "npm run start:users -w server",
-    "start:logger": "npm run start:logger -w server"
+    "start:logger": "npm run start:logger -w server",
+    "typecheck": "npm run typecheck -w server",
+    "test": "npm test -w server"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [

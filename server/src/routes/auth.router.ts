@@ -1,53 +1,16 @@
 import { Router } from 'express'
 import passport from 'passport'
-import { ajv, validateRegistration, validateAuthentification } from '../validation/validation.js'
-import { findUserByEmail, createUser } from '../repositories/users.repository.js'
-import { hashPassword, createToken } from '../auth.js'
+import { AuthService } from '../services/auth.service.js'
 import type { UserSchema } from '../interfaces/interfaces.js'
-import type { RegisterBody, AuthenBody } from '../types/types.js'
 
 const router = Router()
 
-const validateRegister = ajv.compile<RegisterBody>(validateRegistration)
-const validateLogin = ajv.compile<AuthenBody>(validateAuthentification)
-
 router.post('/auth/register', async (req, res) => {
-  if (!validateRegister(req.body)) {
-    res.status(400).json({ errors: validateRegister.errors })
-    return
-  }
-
-  const { email, password, confirmPassword } = req.body
-
-  if (password !== confirmPassword) {
-    res.status(400).json({ message: 'Passwords do not match' })
-    return
-  }
-
-  if (await findUserByEmail(email)) {
-    res.status(409).json({ message: 'User already exists' })
-    return
-  }
-
-  const user = await createUser(email, hashPassword(password))
-  res.status(201).json({ token: createToken(user) })
+  res.status(201).json(await AuthService.register(req.body))
 })
 
 router.post('/auth/login', async (req, res) => {
-  if (!validateLogin(req.body)) {
-    res.status(400).json({ errors: validateLogin.errors })
-    return
-  }
-
-  const { email, password } = req.body
-  const user = await findUserByEmail(email)
-
-  if (!user || user.password !== hashPassword(password)) {
-    res.status(401).json({ message: 'Invalid email or password' })
-    return
-  }
-
-  res.json({ token: createToken(user) })
+  res.json(await AuthService.login(req.body))
 })
 
 router.get('/user', (req, res, next) => {

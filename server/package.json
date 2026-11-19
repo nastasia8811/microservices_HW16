@@ -10,15 +10,17 @@
   "private": "true",
   "scripts": {
     "start": "nodemon server.ts",
+    "build": "tsc -p tsconfig.build.json --noEmit false --outDir dist --rewriteRelativeImportExtensions",
     "typecheck": "tsc --noEmit",
     "migration:generate": "tsx --env-file=.env ../node_modules/typeorm/cli.js migration:generate -d src/db/data-source.ts",
     "migration:create": "tsx ../node_modules/typeorm/cli.js migration:create",
     "migration:run": "tsx --env-file=.env ../node_modules/typeorm/cli.js migration:run -d src/db/data-source.ts",
     "migration:revert": "tsx --env-file=.env ../node_modules/typeorm/cli.js migration:revert -d src/db/data-source.ts",
     "seed": "tsx --env-file=.env src/db/seed.ts",
-    "build": "tsc --noEmit false --outDir dist --rewriteRelativeImportExtensions",
     "start:users": "nodemon users-service.ts",
-    "start:logger": "nodemon logging-service.ts"
+    "start:logger": "nodemon logging-service.ts",
+    "test": "node --experimental-vm-modules ../node_modules/jest/bin/jest.js",
+    "test:coverage": "node --experimental-vm-modules ../node_modules/jest/bin/jest.js --coverage"
   },
   "nodemonConfig": {
     "ext": "ts,json",
@@ -27,18 +29,22 @@
       "**/test/**",
       "**/docs/**",
       "data/*",
-      "swagger.json"
+      "swagger.json",
+      "**/*.test.ts"
     ]
   },
   "devDependencies": {
     "@faker-js/faker": "^10.6.0",
+    "@jest/globals": "^30.5.2",
     "@types/express": "^5.0.6",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^26.6.5",
     "@types/passport": "^1.0.17",
     "@types/passport-jwt": "^4.0.1",
     "@types/swagger-ui-express": "^4.1.8",
+    "jest": "^30.5.2",
     "nodemon": "^3.1.14",
+    "ts-jest": "^29.4.15",
     "tsx": "^4.23.15",
     "typescript": "^5.7.3"
   },
