@@ -19,8 +19,8 @@
     "seed": "tsx --env-file=.env src/db/seed.ts",
     "start:users": "nodemon users-service.ts",
     "start:logger": "nodemon logging-service.ts",
-    "test": "node --experimental-vm-modules ../node_modules/jest/bin/jest.js",
-    "test:coverage": "node --experimental-vm-modules ../node_modules/jest/bin/jest.js --coverage"
+    "test": "node --env-file-if-exists=.env.test --experimental-vm-modules ../node_modules/jest/bin/jest.js --runInBand",
+    "test:coverage": "node --env-file-if-exists=.env.test --experimental-vm-modules ../node_modules/jest/bin/jest.js --runInBand --coverage"
   },
   "nodemonConfig": {
     "ext": "ts,json",
@@ -41,9 +41,11 @@
     "@types/node": "^26.6.5",
     "@types/passport": "^1.0.17",
     "@types/passport-jwt": "^4.0.1",
+    "@types/supertest": "^7.2.1",
     "@types/swagger-ui-express": "^4.1.8",
     "jest": "^30.5.2",
     "nodemon": "^3.1.14",
+    "supertest": "^7.3.2",
     "ts-jest": "^29.4.15",
     "tsx": "^4.23.15",
     "typescript": "^5.7.3"

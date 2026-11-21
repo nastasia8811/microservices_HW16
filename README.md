@@ -97,3 +97,33 @@ curl localhost:3001/users/1
 - **Помилки:** валідація через ajv, власні класи помилок (`ValidationError` → 400, `NotFoundError` → 404) і один глобальний `errorMiddleware`, без try/catch у роутах (Express 5 сам передає помилки з async-обробників).
 
 Документація API: http://localhost:8000/api-docs
+
+---
+
+## HW19 — API tests
+
+API-тести (supertest) лежать у `server/src/tests/` і працюють з окремою тестовою базою. Перед кожним тестом база очищається (`TRUNCATE ... RESTART IDENTITY CASCADE`), після всіх тестів лишається порожньою.
+
+### Тестова база
+
+1. Створити базу в Postgres (назва обов'язково закінчується на `_test`, інакше тести не запустяться):
+   ```sql
+   CREATE DATABASE news_test;
+   ```
+2. Створити файл `server/.env.test` (він у `.gitignore`):
+   ```
+   DATABASE_URL=postgres://<user>:<password>@localhost:5432/news_test
+   JWT_SECRET=test-secret
+   PORT=3000
+   ```
+
+Таблиці створювати не треба: під час підключення TypeORM сам виконає міграції.
+
+### Запуск
+
+```bash
+npm test                    # усі тести: юніт + API (потрібен запущений Postgres)
+npm test -- src/services    # лише юніт-тести, без бази
+```
+
+У GitHub Actions Postgres піднімається як service container, тож API-тести працюють і в CI.
